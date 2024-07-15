@@ -1,0 +1,15 @@
+<div class="p-4">
+    <div class="grid p-fluid formgrid">;
+        <p-table [value]="itemsData" [tableStyle]="{ 'min-width': '40rem' }">
+            <ng-template pTemplate="body" let-itemsData>
+                <tr>
+                    <td style="width:80%; min-width:20rem;">{{itemsData.name}}</td>
+                    <td style="width:20%; min-width:10rem;"> 
+                         <button pButton pRipple class="p-button-rounded p-button-warning"
+                            pTooltip="View" label="View" (click)="visit(itemsData.name)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

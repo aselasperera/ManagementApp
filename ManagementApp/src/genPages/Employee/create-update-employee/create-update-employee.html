@@ -1,0 +1,247 @@
+<div class="profile-card card width p-0">
+  <div class="profile-card-header card-header">
+    <img
+      *ngIf="coverpicPreviewUrl"
+      class="cover-image-container"
+      [src]="coverpicPreviewUrl"
+      alt="cover-image"
+    />
+    <div class="cover-placeholder-container" 
+    *ngIf="!coverpicPreviewUrl">
+      <img
+        src="https://evolza-org-bucket.s3.amazonaws.com/cgaas_logo/empty-cover.png"
+        alt="empty-cover-image"
+      />
+    </div>
+
+    <div class="cover-edit"  *ngIf="isEdit!==0">
+      <input
+        type="file"
+        (change)="CoverPicChangeEvent($event)"
+        id="coverUpload"
+        accept=".png, .jpg, .jpeg"
+      />
+      <label for="coverUpload"></label>
+    </div>
+  </div>
+  <div class="profile-card-body card-body">
+    <div class="card-profile">
+      <div class="row">
+        <div class="flex flex-column align-items-start">
+          <div class="card-profile-image">
+            <div class="avatar-upload">
+              <div class="avatar-edit"  *ngIf="isEdit!==0">
+                <input
+                  type="file"
+                  (change)="PropicChangeEvent($event)"
+                  id="imageUpload"
+                  accept=".png, .jpg, .jpeg"
+                />
+                <label for="imageUpload"></label>
+              </div>
+              <div class="avatar-preview">
+                <div
+                  id="imagePreview"
+                  [style.background-image]="
+                    'url(' +
+                    (propicPreviewUrl || 'https://evolza-org-bucket.s3.amazonaws.com/cgaas_logo/empty-profile.png') +
+                    ')'
+                  "
+                  class="background-image"
+                ></div>
+              </div>
+            </div>
+          </div>
+          <div class="card-profile-details">
+            <h3 class="m-0" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 18ch;">
+             {{employee.FirstName}} {{employee.LastName}} 
+            </h3>
+            <h6 class="mt-2 font-normal">
+             {{ employee.Email }} 
+            </h6>
+          </div>
+        </div>
+        <div>
+          <div class="card-profile-editable-detail">
+            <div class="card-profile-editable-detail-header flex px-0 md:px-3">
+              <h5 class="col-11 pb-0">Edit Details</h5>
+              <div class="col-1">
+                <i
+                  *ngIf="isEdit===0"
+                  class="pi pi-pencil cursor-pointer"
+                  style="font-size: 1rem"
+                  (click)="OnEdit()"
+                ></i>
+              </div>
+            </div>
+            <div class="card-profile-editable-detail-details">
+              <div class="px-0 sm:px-0 md:px-3 mx-3">
+                
+
+                <div class="flex flex-wrap form-group mb-1">
+                    <label for="FirstName" class="col-12 sm:col-12 md:col-6 text-l mb-0">FirstName</label>
+
+                
+                    <input id="FirstName" type="text" placeholder="FirstName" pInputText  [(ngModel)]="employee.FirstName" *ngIf="isEdit!==0" class="col-12 sm:col-12 md:col-6 mt-0"
+                    >
+                
+
+                  <span
+                    class="font-bold fs-6 text-dark col-12 sm:col-12 md:col-6 mt-0"
+                    *ngIf="isEdit===0"
+                    >{{employee.FirstName}}</span
+                  >
+                </div>
+                
+
+                <div class="flex flex-wrap form-group mb-1">
+                    <label for="LastName" class="col-12 sm:col-12 md:col-6 text-l mb-0">LastName</label>
+
+                
+                    <input id="LastName" type="text" placeholder="LastName" pInputText  [(ngModel)]="employee.LastName" *ngIf="isEdit!==0" class="col-12 sm:col-12 md:col-6 mt-0"
+                    >
+                
+
+                  <span
+                    class="font-bold fs-6 text-dark col-12 sm:col-12 md:col-6 mt-0"
+                    *ngIf="isEdit===0"
+                    >{{employee.LastName}}</span
+                  >
+                </div>
+                
+
+                <div class="flex flex-wrap form-group mb-1">
+                    <label for="Email" class="col-12 sm:col-12 md:col-6 text-l mb-0">Email</label>
+
+                
+                    <input id="Email" type="text" placeholder="Email" pInputText  [(ngModel)]="employee.Email" *ngIf="isEdit!==0" class="col-12 sm:col-12 md:col-6 mt-0"
+                    >
+                
+
+                  <span
+                    class="font-bold fs-6 text-dark col-12 sm:col-12 md:col-6 mt-0"
+                    *ngIf="isEdit===0"
+                    >{{employee.Email}}</span
+                  >
+                </div>
+                
+
+                <div class="flex flex-wrap form-group mb-1">
+                    <label for="Country" class="col-12 sm:col-12 md:col-6 text-l mb-0">Country</label>
+
+                
+                    <input id="Country" type="text" placeholder="Country" pInputText  [(ngModel)]="employee.Country" *ngIf="isEdit!==0" class="col-12 sm:col-12 md:col-6 mt-0"
+                    >
+                
+
+                  <span
+                    class="font-bold fs-6 text-dark col-12 sm:col-12 md:col-6 mt-0"
+                    *ngIf="isEdit===0"
+                    >{{employee.Country}}</span
+                  >
+                </div>
+                
+
+                <div class="flex flex-wrap form-group mb-1">
+                    <label for="Age" class="col-12 sm:col-12 md:col-6 text-l mb-0">Age</label>
+
+                
+                    <p-inputNumber id="Age" type="text" placeholder="Age"   [(ngModel)]="employee.Age" *ngIf="isEdit!==0" class="col-12 sm:col-12 md:col-6 p-0 pt-1 mt-0"
+                    ></p-inputNumber>
+                
+
+                  <span
+                    class="font-bold fs-6 text-dark col-12 sm:col-12 md:col-6 mt-0"
+                    *ngIf="isEdit===0"
+                    >{{employee.Age}}</span
+                  >
+                </div>
+                
+
+                <div class="flex flex-wrap form-group mb-1">
+                    <label for="Position" class="col-12 sm:col-12 md:col-6 text-l mb-0">Position</label>
+
+                
+                    <input id="Position" type="text" placeholder="Position" pInputText  [(ngModel)]="employee.Position" *ngIf="isEdit!==0" class="col-12 sm:col-12 md:col-6 mt-0"
+                    >
+                
+
+                  <span
+                    class="font-bold fs-6 text-dark col-12 sm:col-12 md:col-6 mt-0"
+                    *ngIf="isEdit===0"
+                    >{{employee.Position}}</span
+                  >
+                </div>
+                
+
+                <div class="flex flex-wrap form-group mb-1">
+                    <label for="Salary" class="col-12 sm:col-12 md:col-6 text-l mb-0">Salary</label>
+
+                
+                    <p-inputNumber id="Salary" type="text" placeholder="Salary"   [(ngModel)]="employee.Salary" *ngIf="isEdit!==0" class="col-12 sm:col-12 md:col-6 p-0 pt-1 mt-0"
+                    ></p-inputNumber>
+                
+
+                  <span
+                    class="font-bold fs-6 text-dark col-12 sm:col-12 md:col-6 mt-0"
+                    *ngIf="isEdit===0"
+                    >{{employee.Salary}}</span
+                  >
+                </div>
+                
+
+                <div class="flex flex-wrap form-group mb-1">
+                    <label for="Phone" class="col-12 sm:col-12 md:col-6 text-l mb-0">Phone</label>
+
+                
+                    <input id="Phone" type="text" placeholder="Phone" pInputText  [(ngModel)]="employee.Phone" *ngIf="isEdit!==0" class="col-12 sm:col-12 md:col-6 mt-0"
+                    >
+                
+
+                  <span
+                    class="font-bold fs-6 text-dark col-12 sm:col-12 md:col-6 mt-0"
+                    *ngIf="isEdit===0"
+                    >{{employee.Phone}}</span
+                  >
+                </div>
+                
+
+                <div class="flex flex-wrap form-group mb-1">
+                    <label for="Gender" class="col-12 sm:col-12 md:col-6 text-l mb-0">Gender</label>
+
+                
+                    <p-dropdown [options]="options" [(ngModel)]="employee.Gender" placeholder="Gender" [showClear]="true" *ngIf="isEdit!==0" class="col-12 sm:col-12 md:col-6 mt-0"
+                    ></p-dropdown>
+
+                
+
+                  <span
+                    class="font-bold fs-6 text-dark col-12 sm:col-12 md:col-6 mt-0"
+                    *ngIf="isEdit===0"
+                    >{{employee.Gender}}</span
+                  >
+                </div>
+                
+                </div>
+                <div
+                  class="px-0 col-12 flex flex-column md:flex-row justify-content-center md:justify-content-end mb-2"
+                  *ngIf="isEdit!==0"
+                >
+                  <button
+                    pButton
+                    pRipple
+                    class="p-button-outlined md:w-8rem w-full mr-0 md:mr-3 mb-2 md:mb-0"
+                    icon="pi pi-times"
+                    label="Cancel"
+                    (click)="CloseInstances()"
+                  ></button>
+                  <button pButton pRipple class="p-button-primary md:w-8rem w-full" icon="pi pi-check" label="Save"
+                    (click)="save()"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+<p-toast></p-toast>
+<div class="card">
+    <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+    <p-table #dt [value]="EmployeeData" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+        [globalFilterFields]="['EmployeeId','FirstName','LastName','Email','Country','Age','Position','Salary','Phone','Gender',]"
+             [loading]="isDataLoading"  >
+        <ng-template pTemplate="caption">
+            <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                <span class="p-input-icon-left w-full sm:w-20rem">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Employee Search" class="w-full" />
+                </span>
+                <div class="flex">
+                    <button pButton class="p-button-outlined w-full sm:w-auto flex-order-0 sm:flex-order-1 ml-0 md:ml-3" icon="pi pi-download" label="Download CSV" (click)="downloadFile()" ></button>
+                    <div>
+                        <input type="file" id="fileInput" style="display: none" (change)="uploadFile($event)">
+                        <label pButton type="button" class="p-button-outlined w-full sm:w-auto flex-order-0 sm:flex-order-1 ml-0 md:ml-3"icon="pi pi-upload" label="Upload CSV" for="fileInput"></label>
+                    </div>
+                    <button  (click)="showCreateEmployeeDialog()" pButton class="p-button-primary w-full sm:w-auto flex-order-0 sm:flex-order-1  ml-0 md:ml-3" icon="pi pi-plus" label="Add Employee"></button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="firstName" class="white-space-nowrap" style="width:25%" id="firstName">First Name<p-sortIcon
+                    field="firstName"></p-sortIcon></th>
+                <th pSortableColumn="lastName" class="white-space-nowrap" style="width:25%" id="lastName">Last Name<p-sortIcon
+                    field="lastName"></p-sortIcon></th>
+                <th pSortableColumn="profilePicture" class="white-space-nowrap" style="width:10%" id="firstName">Profile picture<p-sortIcon
+                    field="profilePicture"></p-sortIcon></th>
+                <th pSortableColumn="Email" class="white-space-nowrap" style="width:35%">Email<p-sortIcon field="Email"></p-sortIcon></th>
+<th pSortableColumn="Country" class="white-space-nowrap" style="width:35%">Country<p-sortIcon field="Country"></p-sortIcon></th>
+<th pSortableColumn="Age" class="white-space-nowrap" style="width:35%">Age<p-sortIcon field="Age"></p-sortIcon></th>
+<th pSortableColumn="Position" class="white-space-nowrap" style="width:35%">Position<p-sortIcon field="Position"></p-sortIcon></th>
+<th pSortableColumn="Salary" class="white-space-nowrap" style="width:35%">Salary<p-sortIcon field="Salary"></p-sortIcon></th>
+<th pSortableColumn="Phone" class="white-space-nowrap" style="width:35%">Phone<p-sortIcon field="Phone"></p-sortIcon></th>
+<th pSortableColumn="Gender" class="white-space-nowrap" style="width:35%">Gender<p-sortIcon field="Gender"></p-sortIcon></th>
+
+                <th *ngIf="canDelete || canUpdate" class="white-space-nowrap" style="width:25%">Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-EmployeeData>
+            <tr (click)="showEditEmployeeDialog(EmployeeData)">
+                <td style="width:25%; min-width:10rem;" class="cursor-pointer font-bold">
+                    {{EmployeeData.FirstName?(EmployeeData.FirstName.length > 20 ? (EmployeeData.FirstName | slice:0:20) + '...' : EmployeeData.FirstName):'-'}}
+                </td>
+                <td style="width:25%; min-width:10rem;" class="cursor-pointer font-bold">
+                    {{EmployeeData.LastName?(EmployeeData.LastName.length > 20 ? (EmployeeData.LastName | slice:0:20) + '...' : EmployeeData.LastName):'-'}}
+                </td>
+                <td>
+                    <p-avatar image="{{ EmployeeData.ProfileImage }}"  styleClass="ml-2" size="large" shape="circle" *ngIf="EmployeeData.ProfileImage"></p-avatar>
+                    <p-avatar image="https://evolza-org-bucket.s3.amazonaws.com/cgaas_logo/empty-profile.png" styleClass="ml-2" size="large" shape="circle" *ngIf="!EmployeeData.ProfileImage"></p-avatar>
+                </td>
+                <td style="width:11%; min-width:10rem;">
+{{EmployeeData.Email ? (EmployeeData.Email.length > 20 ? (EmployeeData.Email | slice:0:20) + '...' : EmployeeData.Email) : '-'}} 
+</td>
+<td style="width:11%; min-width:10rem;">
+{{EmployeeData.Country ? (EmployeeData.Country.length > 20 ? (EmployeeData.Country | slice:0:20) + '...' : EmployeeData.Country) : '-'}} 
+</td>
+<td style="width:11%; min-width:10rem;">
+{{EmployeeData.Age}} 
+</td>
+<td style="width:11%; min-width:10rem;">
+{{EmployeeData.Position ? (EmployeeData.Position.length > 20 ? (EmployeeData.Position | slice:0:20) + '...' : EmployeeData.Position) : '-'}} 
+</td>
+<td style="width:11%; min-width:10rem;">
+{{EmployeeData.Salary}} 
+</td>
+<td style="width:11%; min-width:10rem;">
+{{EmployeeData.Phone}} 
+</td>
+<td style="width:11%; min-width:10rem;">
+{{EmployeeData.Gender}} 
+</td>
+
+                <td>
+                    <div class="flex">
+
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                            (click)="deleteEmployee($event,EmployeeData)"   pTooltip="Delete"></button>
+                        
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
